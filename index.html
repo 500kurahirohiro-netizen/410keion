@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>410 K-ON | 四天王寺大学 軽音楽部</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- カラースキーム --- */
+        :root {
+            --color-bg: #000000;
+            --color-text: #ffffff;
+            --color-text-muted: #888888;
+            --color-accent: #e60012; 
+            --color-border: rgba(255, 255, 255, 0.1);
+            --font-en: 'Montserrat', sans-serif;
+            --font-ja: 'Noto Sans JP', sans-serif;
+        }
+
+        /* --- ベース設定 --- */
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-ja);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            margin: 0; padding: 0;
+            line-height: 1.8;
+            letter-spacing: 0.08em;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* --- ヘッダー（ヒーローエリア） --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--color-border);
+            background-color: #000000;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #220000 0%, #000000 80%);
+            z-index: 1;
+            transform: translateY(0); 
+            will-change: transform;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 5vw;
+            opacity: 1;
+            transform: translateZ(0);
+            animation: heroFadeIn 1.5s ease-out forwards;
+        }
+
+        .hero-logo {
+            width: clamp(80px, 10vw, 130px);
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(230, 0, 18, 0.4)); 
+        }
+
+        .hero-title-sub {
+            font-family: var(--font-en);
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            font-weight: 700;
+            color: var(--color-accent);
+            letter-spacing: 0.6em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            padding-left: 0.6em;
+        }
+
+        .hero-title-main {
+            font-family: var(--font-en);
+            font-size: clamp(3.5rem, 12vw, 9rem);
+            font-weight: 900;
+            color: var(--color-text);
+            margin: 0;
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+
+        .hero-title-main .dot {
+            color: var(--color-accent);
+        }
+
+        .hero-title-ja {
+            font-family: var(--font-ja);
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            font-weight: 400;
+            color: var(--color-text-muted);
+            margin-top: 15px;
+            letter-spacing: 0.4em;
+            padding-left: 0.4em;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: var(--font-en);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--color-accent), transparent);
+            margin-top: 15px;
+            animation: scrollAnim 2s infinite ease-in-out;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 5vw;
+        }
+
+        section.observe-target {
+            margin-bottom: 150px;
+            opacity: 0; 
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        section.observe-target.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sec-title-wrap {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 20px;
+        }
+
+        .sec-title-en {
+            font-family: var(--font-en);
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--color-text-muted);
+            margin: 0 0 10px 0;
+            transition: color 0.4s ease;
+        }
+
+        .sec-title-wrap:hover .sec-title-en {
+            color: var(--color-accent);
+            -webkit-text-stroke: 1px var(--color-accent);
+        }
+
+        .sec-title-ja {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin: 0;
+            letter-spacing: 0.2em;
+        }
+
+        .concept-text {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.4;
+            margin-bottom: 40px;
+        }
+        .concept-sub {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            max-width: 700px;
+        }
+        .highlight {
+            color: var(--color-accent);
+            font-weight: 700;
+        }
+
+        .schedule-list { list-style: none; padding: 0; margin: 0; }
+        .schedule-item {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            padding: 30px 0;
+        }
+        .schedule-month {
+            font-family: var(--font-en);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--color-accent);
+            width: 130px;
+            flex-shrink: 0;
+        }
+        .schedule-event { font-size: 1.4rem; font-weight: 700; margin-bottom: 5px; }
+        .schedule-desc { font-size: 0.95rem; color: var(--color-text-muted); }
+
+        .faq-item { margin-bottom: 40px; }
+        .faq-q {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .faq-q::before {
+            content: 'Q.';
+            font-family: var(--font-en);
+            color: var(--color-accent);
+            font-size: 1.8rem;
+            margin-right: 15px;
+            line-height: 1;
+        }
+        .faq-a {
+            font-size: 1.05rem;
+            color: var(--color-text-muted);
+            padding-left: 45px;
+        }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .info-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--color-border);
+            padding: 40px;
+        }
+        .info-label {
+            font-family: var(--font-en);
+            font-size: 1rem;
+            color: var(--color-accent);
+            letter-spacing: 0.2em;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        .info-data { font-size: 1.5rem; font-weight: 700; line-height: 1.5; }
+
+        .sns-wrapper {
+            text-align: center;
+            margin-top: 100px;
+            padding: 80px 0;
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .insta-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .insta-link:hover { transform: scale(1.05); }
+        .insta-title {
+            font-family: var(--font-en);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--color-text);
+            margin-bottom: 10px;
+        }
+        .insta-id {
+            font-size: 1.2rem;
+            color: var(--color-accent);
+            letter-spacing: 0.1em;
+        }
+
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            font-family: var(--font-en);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes heroFadeIn {
+            0% { opacity: 0; transform: translateY(20px) translateZ(0); }
+            100% { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+        @keyframes scrollAnim {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            50.1% { transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        @media (max-width: 768px) {
+            .sec-title-en { font-size: 2.5rem; }
+            .concept-text { font-size: 1.8rem; }
+            .schedule-item { flex-direction: column; padding: 20px 0; }
+            .schedule-month { margin-bottom: 10px; font-size: 1.5rem; }
+            .info-grid { grid-template-columns: 1fr; }
+            .insta-title { font-size: 2rem; }
+            .container { padding: 80px 5vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-content">
+            <img src="logo.png.png" alt="410 K-ON Logo" class="hero-logo">
+            <div class="hero-title-sub">SHITENNOJI UNIV. LIGHT MUSIC CLUB</div>
+            <h1 class="hero-title-main">410<span class="dot">.</span>K-ON</h1>
+            <div class="hero-title-ja">四天王寺大学 軽音楽部</div>
+        </div>
+        <div class="scroll-down">
+            Scroll
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="observe-target">
+            <div class="concept-text">鳴らせ、<br>魂の音を。</div>
+            <div class="concept-sub">
+                四天王寺大学 軽音楽部へようこそ。<br>
+                初心者から経験者まで、音楽を愛するすべての人が主役になれる場所。月に一度のライブや、<span class="highlight">水無月祭</span>、<span class="highlight">大学祭（IBU祭）</span>での大ステージ、他大学との熱い合同ライブなど、最高の瞬間があなたを待っています。
+            </div>
+        </section>
+
+        <section class="observe-target">
+            <div class="sec-title-wrap">
+                <h2 class="sec-title-en">Schedule</h2>
+                <p class="sec-title-ja">年間スケジュール（目安）</p>
+            </div>
+            <ul class="schedule-list">
+                <li class="schedule-item">
+                    <div class="schedule-month">APR.</div>
+                    <div>
+                        <div class="schedule-event">春の合同ライブ</div>
+                        <div class="schedule-desc">他大学との交流ライブ！新年度の始まりを音楽と共に盛り上げます。</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">MAY.</div>
+                    <div>
+                        <div class="schedule-event">くじ引きライブ</div>
+                        <div class="schedule-desc">普段とは違う、くじ引きで決まったメンバーとバンドを組んで楽しむ特別企画！</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">JUN.</div>
+                    <div>
+                        <div class="schedule-event">水無月祭ステージ</div>
+                        <div class="schedule-desc">大学の前期の一大イベント。事前のオーディションを勝ち抜いたバンドが野外ステージへ！</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">AUG.</div>
+                    <div>
+                        <div class="schedule-event">サマーコンサート</div>
+                        <div class="schedule-desc">夏休み真っ只中のアツいライブイベント！</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">SEP.</div>
+                    <div>
+                        <div class="schedule-event">夏の合同ライブ</div>
+                        <div class="schedule-desc">他大学との熱い対バン。外部からの刺激を受けてバンドのレベルアップを図ります。</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">OCT.<br><span style="font-size: 1rem; color: #666;">/ NOV.</span></div>
+                    <div>
+                        <div class="schedule-event">大学祭（IBU祭）</div>
+                        <div class="schedule-desc">11/1・2・3開催。一年で最も熱いメインステージ。オーディションを経て、観客と一体になる最高の瞬間！</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">DEC.</div>
+                    <div>
+                        <div class="schedule-event">クリスマスコンサート</div>
+                        <div class="schedule-desc">年末を締めくくる特別なライブイベント。</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">JAN.</div>
+                    <div>
+                        <div class="schedule-event">新年会ライブ</div>
+                        <div class="schedule-desc">新年一発目のライブ！今年も全力で音楽を楽しむためのスタートダッシュ。</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">FEB.</div>
+                    <div>
+                        <div class="schedule-event">冬の合同ライブ ＆ 企画ライブ</div>
+                        <div class="schedule-desc">他大学との合同ライブや、部員持ち込みの特別な企画ライブを開催！</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-month">MAR.</div>
+                    <div>
+                        <div class="schedule-event">卒業生追い出しライブ（卒コン）</div>
+                        <div class="schedule-desc">お世話になった先輩たちへ、感謝を込めたラストステージ。</div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="observe-target">
+            <div class="sec-title-wrap">
+                <h2 class="sec-title-en">Q & A</h2>
+                <p class="sec-title-ja">よくある質問</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-q">楽器初心者でも入部できますか？</div>
+                <div class="faq-a">もちろんです！部員の多くが大学から楽器を始めています。先輩たちが優しく丁寧に教えるので安心してください。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">複数のバンドを掛け持ちすることは可能ですか？</div>
+                <div class="faq-a">可能です！色々なジャンルの音楽に挑戦したり、たくさんの部員と交流するために掛け持ちしている部員もたくさんいます。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q">自分の楽器を持っていなくても大丈夫ですか？</div>
+                <div class="faq-a">ドラムセットやアンプ類、キーボードなどは部室に完備されています。ギターやベースなどは自分のものを用意することをおすすめしますが、最初は先輩に相談してみてください！</div>
+            </div>
+        </section>
+
+        <section class="observe-target">
+            <div class="sec-title-wrap">
+                <h2 class="sec-title-en">Information</h2>
+                <p class="sec-title-ja">活動情報</p>
+            </div>
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-label">Practice Days</div>
+                    <div class="info-data">
+                        火・金 17:10 ～ 20:00<br>
+                        土曜日 10:00 ～ 17:00
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Location</div>
+                    <div class="info-data">
+                        8号館 2階<br>
+                        8-201 大教室
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sns-wrapper observe-target">
+            <a href="https://www.instagram.com/ibukeion/" target="_blank" class="insta-link">
+                <div class="insta-title">FOLLOW US ON INSTAGRAM</div>
+                <div class="insta-id">@ibukeion</div>
+            </a>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2026 SHITENNOJI UNIV. LIGHT MUSIC CLUB. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.observe-target').forEach(el => {
+            observer.observe(el);
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const bg = document.getElementById('hero-bg');
+            if (scrollY < window.innerHeight) {
+                bg.style.transform = `translateY(${scrollY * 0.2}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
